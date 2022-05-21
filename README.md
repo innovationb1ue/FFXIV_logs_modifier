@@ -15,7 +15,8 @@ But when you modified a lot,  your report may get blacklisted by the logs websit
 - run the script, a file with modified postfix will be generated. 
 
 ## 介绍
-这个代码用于修改ACT产生的logs记录txt文件。 你基本上可以自动修改伤害和战斗时间等一系列数据，或者进行逐行精确修改。但是如果你修改了很多，你的报告可能会失效。
+这个代码用于修改ACT产生的logs记录txt文件。 你基本上可以自动修改伤害和战斗时间等一系列数据，或者进行逐行精确修改。但是如果你修改了很多，你的报告可能会失效。  
+该脚本与FF14游戏不产生任何程度互动，更不属于游戏第三方插件。
 
 ## 教程
 - 下载代码，从python官网安装python解释器
