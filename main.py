@@ -17,6 +17,10 @@ def main():
 
 
 def modify_file(path: str, source_name, multiplier, target_name):
+    """
+    Modify the given file, add all damages to the player and boss specified
+    修改指定path的文件，增加目标角色对指定boss的全部伤害
+    """
     # open logs file
     with open(path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
@@ -36,8 +40,7 @@ def modify_file(path: str, source_name, multiplier, target_name):
         if row_cols[0] != "21" or (row_cols[6] not in target_name and row_cols[7] not in target_name):
             f.write(row)
             continue
-        # skip self
-        # self_name == target_name
+        # skip if not self damage or is self buffing
         if row_cols[3] != source_name or row_cols[3] == row_cols[7]:
             f.write(row)
             continue
@@ -46,7 +49,7 @@ def modify_file(path: str, source_name, multiplier, target_name):
         if row_cols[6] not in target_name and row_cols[7] not in target_name:
             f.write(row)
             continue
-        # retrieve damage
+        # retrieve damage representation
         damage_str = row_cols[9]
         if damage_str.endswith('0000'):
             damage = int(damage_str[:-4], 16)
@@ -77,13 +80,16 @@ def modify_file(path: str, source_name, multiplier, target_name):
             continue
         else:
             raise ValueError("damage increased error")
+        # replace the row component
         row_cols[9] = damage_increased
+        # reconstruct row string & encode
         text = "|".join(row_cols[:-1])
         enc_code = encrypt(text, idx)
         row_cols[-1] = enc_code + '\n'
         new_row = "|".join(row_cols)
         print(idx, row, end='')
         print(idx, new_row, end='')
+        # write into modified file
         f.write(new_row)
         f.flush()
     f.close()
@@ -150,16 +156,26 @@ def fix_file(path):
 
 
 if __name__ == '__main__':
-    source_name = ''
+    source_name = input("Input your character name: ")
     multiplier = 1.1
-    target_name = ['鱼尾海马怪']
-    # target_name = '赫斯珀洛斯'
-    # modify_file('./logs_files/SplitNetwork_26404_20220501_modified-2022-05-01T05-23-35.572Z.log',
-    #             source_name,
-    #             multiplier,
-    #             target_name)
-    modify_date('./logs_files/11.log', '2022-05-02T15', '2022-05-05T20')
-    main()
+    target_name_input = input("Input your boss target name: ")
+    # target_name = ['鱼尾海马怪']
+    target_name = [target_name_input]
+    file_index = 0
+    filenames = []
+    for file in os.listdir('./logs_file'):
+        if not file.endswith(".log"):
+            continue
+        print(f"[{file_index}]: {file}")
+        filenames.append(file)
+    path = "./logs_file/" + filenames[int(input("Input the index of file you want to modify: "))]
+    print(f"Select file {path}")
+    modify_file(path,
+                source_name,
+                multiplier,
+                target_name)
+    # modify_date(path, '2022-05-02T15', '2022-05-05T20')
+    # main()
 
 
 
