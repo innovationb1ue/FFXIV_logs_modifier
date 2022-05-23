@@ -5,8 +5,6 @@ from encrypt_funcs import encrypt, u_49152
 
 
 def main():
-    # test_str = ("21|2022-04-26T19:54:57.7650000+01:00|1019E6AE|Irynie|5EF8|注药III|4000B887|埃里克特翁尼亚斯|750103|FFF00000|1B|5EF88000|0|0|0|0|0|0|0|0|0|0|0|0|189216|23796496|10000|10000|||99.99|99.99|0.00|2.99|50437|50437|2658|10000|||106.39|101.92|0.00|-1.86|0000661B|0|1" +
-    #             "|{}").format("170039").encode('utf-8')
     while True:
         text_str = input("Text: ")
         line_count = input("Line Num: ")
