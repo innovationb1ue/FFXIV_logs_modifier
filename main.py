@@ -156,26 +156,30 @@ def fix_file(path):
 
 
 if __name__ == '__main__':
-    source_name = input("Input your character name: ")
-    multiplier = 1.1
-    target_name_input = input("Input your boss target name: ")
-    # target_name = ['鱼尾海马怪']
-    target_name = [target_name_input]
-    file_index = 0
     filenames = []
     for file in os.listdir('./logs_file'):
         if not file.endswith(".log"):
             continue
-        print(f"[{file_index}]: {file}")
         filenames.append(file)
-    path = "./logs_file/" + filenames[int(input("Input the index of file you want to modify: "))]
+    if len(filenames) == 0 :
+        print("Please move your logs file into dir logs_file and rerun. 请把logs文件放入logs_file文件夹后重新运行")
+        input("")
+        raise FileNotFoundError("logs file not found")
+    source_name = input("Input your character name (角色名): ")
+    # source_name = "YourCharacterName"
+    multiplier = 1.1
+    target_name_input = input("Input your boss target name (BOSS名): ")
+    # target_name = ['鱼尾海马怪']
+    target_name = [target_name_input]
+    for idx, filename in enumerate(filenames):
+        print(f"[{idx}] {filename}")
+    path = "./logs_file/" + filenames[int(input("Input the index of file you want to modify(输入文件编号): "))]
     print(f"Select file {path}")
     modify_file(path,
                 source_name,
                 multiplier,
                 target_name)
     # modify_date(path, '2022-05-02T15', '2022-05-05T20')
-    # main()
 
 
 
